@@ -9,7 +9,7 @@ const LoginPage = () => {
         </h1>
         <p className="text-white md:text-2xl">A place To Flex Your Creation</p>
       </div>
-      <div className="flex flex-col w-full md:w-1/2 p-4 rounded-xl shadow-2xl shadow-gray-800">
+      <div className="flex flex-col w-full md:w-1/3 p-4 rounded-xl shadow-2xl shadow-gray-800">
         <h1 className="text-white text-xl mb-4">Login To Your Account</h1>
         <LoginUserForm />
       </div>

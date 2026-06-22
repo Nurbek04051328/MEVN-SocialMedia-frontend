@@ -1,20 +1,38 @@
 import Spinner from "../components/General/Spinner";
 import type { RootState } from "../store/store";
-import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../store/slices/authSlice";
-import { logoutUser } from "../api/auth.api";
-import { toast } from "react-toastify";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { useState, useEffect } from "react";
 import Navbar from "../components/General/Navbar";
 import SideBar from "../components/General/SideBar";
+import ChatBar from "../components/General/ChatBar";
+import FeedSection from "../components/FeedPageComponent/FeedSection";
+import { toast } from 'react-toastify';
+import { getFeedPosts } from "../api/feed.api";
+import type { FeedPost } from "../types/feed";
 
 const FeedPage = () => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate()
-  const user = useSelector((state:RootState) => state.auth.user);
   const { loading } = useSelector((state: RootState) => state.auth);
   const [ serverError, setServerError ] = useState<string | null>(null);
+  const [ feedPosts, setFeedPosts ] = useState<FeedPost[]>([]);
+  const [ loadingPosts, setLoadingPosts ] = useState(true)
+
+  useEffect(() => { 
+    const getPosts = async() => {
+      try {
+        const response = await getFeedPosts();
+        console.log("posts", response);
+        
+        setFeedPosts(response.data);
+      } catch (error:any) {
+        setServerError(error.message);
+        toast.error(error.message ||  "Failed to load feed")
+      } finally {
+        setLoadingPosts(false);
+      }
+    }
+    getPosts();
+  }, []);
+  
 
   if(loading) {
     return (
@@ -22,26 +40,21 @@ const FeedPage = () => {
     )
   }
 
-  const handleLogout = async() => {
-    try {
-      const response = await logoutUser();
-      toast.success(response.message);
-      dispatch(logout());
-      navigate("/login", { replace: true });
-    } catch (error:any) {
-      setServerError(error.message);
-      toast.error(error.message)
-    }
-  }
-
   return (
     <div className="min-h-screen">
       <Navbar />
       <div className="container flex">
         <SideBar />
-        <div>
-          <h1>This is the feed page</h1>
-        </div>
+          {loadingPosts ? (
+            <Spinner />
+          ) : feedPosts.length === 0 ? (
+            <p className="text-white">No posts found</p>
+          ) : (
+            feedPosts.map((feedPost) => (
+              <FeedSection key={feedPost._id} post={feedPost}/>
+            ))
+          )}
+        <ChatBar />
       </div>
     </div>
   )

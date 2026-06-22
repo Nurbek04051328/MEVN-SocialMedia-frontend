@@ -9,7 +9,7 @@ const RegisterPage = () => {
         </h1>
         <p className="text-white md:text-2xl">A place To Flex Your Creation</p>
       </div>
-      <div className="flex flex-col w-full md:w-1/2 px-4 py-1 rounded-xl shadow-2xl shadow-gray-800">
+      <div className="flex flex-col w-full md:w-1/3 px-4 py-1 rounded-xl shadow-2xl shadow-gray-800">
         <h1 className="text-white text-xl mb-4">Create Your Account</h1>
         <RegisterUserForm />
       </div>
