@@ -17,10 +17,12 @@ export interface FeedComment {
   commentedBy: CommentedBy;
 }
 
-export interface FeedPost {
+export interface FeedPostType {
   _id: string;
   content: string;
-  image?: string;
+  image?: {
+    url: string
+  };
   owner: FeedOwner;
   comments: FeedComment[];
   likes: string[];
