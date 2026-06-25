@@ -26,7 +26,7 @@ const Navbar = () => {
   }
 
   return (
-    <nav className='min-h-[10vh] flex justify-between items-center px-4 py-4 md:px-20 md:py-4 border-b border-[#230737] shadow-[#230737] sticky'>
+    <nav className='min-h-[8vh] flex justify-between items-center px-4 py-4 md:px-20 md:py-4 border-b border-[#230737] shadow-[#230737] sticky'>
       <h1 className='text-[#9929EA] text-xl font-bold md:text-3xl'>Bookblogs</h1>
       <div className='flex justify-center items-center gap-2'>
         {user?.profileImage? (

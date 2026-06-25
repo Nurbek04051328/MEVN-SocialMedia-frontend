@@ -4,7 +4,7 @@ import type { RootState } from "../../store/store";
 import  { useState } from "react";
 import { toast } from "react-toastify";
 import { toggleLikePost } from "../../api/like.api";
-import { User } from "lucide-react"
+import { Heart, MessageCircle, User } from "lucide-react"
 
 interface FeedPostProps {
   post: FeedPostType;
@@ -52,10 +52,10 @@ const FeedPost = ({ post }: FeedPostProps) => {
 
 
   return (
-    <section className='min-w-[60vw] md:px:32 md:py-8'>
+    <section className='min-w-[60vw] px-32 md:py-8'>
       <div className="post-container flex flex-col gap-2">
         <div className="flex gap-2 items-center">
-          {user?.profileImage? (
+          {post.owner?.profileImage? (
             <img 
               className="w-8 aspect-square rounded-full object-cover" 
               src={post.owner.profileImage} 
@@ -72,14 +72,34 @@ const FeedPost = ({ post }: FeedPostProps) => {
         {post.image && (
           <div className="mg:my-2">
             <img 
-              className="aspect-auto"
+              className="rounded-xl max-h-105"
               src={post.image.url} 
               alt="post-image" 
             />
           </div>
         )}
-        <div className="post-content text-white">
-          <p>{post.content}</p>
+        <p className="text-white">{post.content}</p>
+        <div className="flex items-center gap-4 mt-2">
+          {/* likes */}
+          <div className="flex items-center gap-2">
+            <button 
+              disabled={loading} 
+              onClick={handleToggleLike}
+              className="flex items-center gap-1 text-white hover:text-pink-500 cursor-pointer transition disabled:opacity-50"
+            >
+              <Heart  
+                size={20} 
+                className={`transition ${
+                  isLikesByMe ? "fill-pink-500 text-pink-500" : ""
+                }`}/>
+                <span className="text-sm">{likesCount}</span>
+            </button>
+          </div>
+          {/* comment */}
+          <div className="flex items-center gap-2 text-white/80 cursor-pointer hover:text-white/50 transition">
+            <MessageCircle size={20} />
+            <span className="text-sm">{post.commentsCount}</span>
+          </div>
         </div>
       </div>
     </section>

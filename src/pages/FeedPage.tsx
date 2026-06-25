@@ -41,11 +41,11 @@ const FeedPage = () => {
   }
 
   return (
-    <div className="min-h-screen ">
+    <div className="h-screen overflow-hidden flex flex-col">
       <Navbar />
-      <div className="container flex">
+      <div className="flex flex-1 overflow-hidden">
         <SideBar />
-        <div className="feed-container">
+        <div className="flex-1 overflow-y-auto px-4">
           {loadingPosts ? (
             <Spinner />
           ) : feedPosts.length === 0 ? (
